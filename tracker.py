@@ -1,6 +1,7 @@
 # Tracker APIs (track_trackingAPI.py)
 
 import cv2
+import os
 
 
 print(cv2.__version__)
@@ -14,15 +15,22 @@ trackers = [
             cv2.TrackerCSRT_create,
             #cv2.TrackerMOSSE_create
             ]
-trackerIdx = 2  # 트랙커 생성자 함수 선택 인덱스
+trackerIdx = 1  # 트랙커 생성자 함수 선택 인덱스
 tracker = None
 isFirst = True
 
 video_src = 0 # 비디오 파일과 카메라 선택 ---②
-video_src = "C:/Users/Jaeuk/Desktop/detect.mp4"
+video_src = "C:\\Users\\Jaeuk\\Desktop\\data\\bird.mp4"
+video_src = video_src.replace('\\',"/")
 cap = cv2.VideoCapture(video_src)
+
 fps = cap.get(cv2.CAP_PROP_FPS) # 프레임 수 구하기
-delay = int(1000/fps)
+
+try:
+    delay = int(1000/fps)
+except:
+    delay = 10
+    
 win_name = 'Tracking APIs'
 while cap.isOpened():
     ret, frame = cap.read()
